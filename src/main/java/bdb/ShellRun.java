@@ -42,6 +42,6 @@ public class ShellRun {
 		}
 		
 		db.closeConnection();
-		System.out.print("BBye..");
+		System.out.println("BBye..");
 	}
 }
