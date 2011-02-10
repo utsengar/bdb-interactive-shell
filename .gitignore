@@ -1,0 +1,9 @@
+.DS_Store
+*~
+*.swp
+target/**/*
+*.jar
+*.jdb
+*.lck
+.classpath
+.settings
