@@ -43,7 +43,7 @@ public class ShellEvent extends EventManager.EventObject {
             System.out.println("delete key -- Remove remove value and the key");
             System.out.println("help -- Print this message.");
             System.out.println("exit -- Exit from this shell.");
-			return true;
+			return false;
 		}
 		else
 		{
