@@ -19,7 +19,7 @@ public class ShellRun {
 		{
 			System.out.print("BDB: ");
 			Scanner dbInit = new Scanner(System.in);
-			connected = db.createConnection(dbInit.nextLine());
+			connected = db.createConnection(dbInit.nextLine().trim());
 			
 			if(!connected)
 			{

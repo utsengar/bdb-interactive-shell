@@ -14,18 +14,12 @@ import com.sleepycat.je.OperationStatus;
 public class DatabaseMethods {
 	private Environment myEnv;
 	private static Database vendorDb;
-	private Helpers helpers = new Helpers();
 
 	public boolean createConnection(String folderPath) {
-		// boolean readOnly = true;
 		File envHome = new File(folderPath);
 		EnvironmentConfig myEnvConfig = new EnvironmentConfig();
 		DatabaseConfig myDbConfig = new DatabaseConfig();
-
-		// myEnvConfig.setReadOnly(!readOnly);
-		// myDbConfig.setReadOnly(!readOnly);
-		// myEnvConfig.setAllowCreate(!readOnly);
-		// myDbConfig.setAllowCreate(!readOnly);
+		
 		try {
 			Environment myEnv = new Environment(envHome, myEnvConfig);
 			vendorDb = myEnv.openDatabase(null, "VendorDB", myDbConfig);
@@ -48,49 +42,50 @@ public class DatabaseMethods {
 
 	public String get(String key) {
 
-		DatabaseEntry entryKey = new DatabaseEntry(helpers.getBytes(key));
+		DatabaseEntry entryKey = new DatabaseEntry(key.getBytes());
 		DatabaseEntry returnKey = new DatabaseEntry();
+		String stringValue = null;
 
 		try {
-
+			
 			getVendorDB().get(null, entryKey, returnKey, null);
+			
+			stringValue = new String(returnKey.getData());
 
-		} catch (DatabaseException e) {
-
-			e.printStackTrace();
+		} catch (Exception e) {
+			stringValue = "key: " + key + " is not present.";
 		}
-
-		String stringValue = new String(returnKey.getData());
+		
 		return stringValue;
 	}
 
 	public void put(String key, String value) {
-		DatabaseEntry entryKey = new DatabaseEntry(helpers.getBytes(key));
-		DatabaseEntry entryValue = new DatabaseEntry(helpers.getBytes(value));
+		DatabaseEntry entryKey = new DatabaseEntry(key.getBytes());
+		DatabaseEntry entryValue = new DatabaseEntry(value.getBytes());
 
 		try {
 			getVendorDB().put(null, entryKey, entryValue);
 		} catch (DatabaseException e) {
-
+			
 		}
 	}
 
 	public void delete(String key) {
-		DatabaseEntry entryKey = new DatabaseEntry(helpers.getBytes(key));
+		DatabaseEntry entryKey = new DatabaseEntry(key.getBytes());
 
 		try {
 			OperationStatus status = getVendorDB().delete(null, entryKey);
 			if (status == OperationStatus.SUCCESS) {
 			} else {
-
+				System.out.println("Key deleted successfully!");
 			}
 		} catch (DatabaseException e) {
-
+			
 		}
 	}
 
 	public boolean contains(String key) {
-		DatabaseEntry entryKey = new DatabaseEntry(helpers.getBytes(key));
+		DatabaseEntry entryKey = new DatabaseEntry(key.getBytes());
 
 		boolean keyFound = false;
 		Cursor cursor = null;
