@@ -15,8 +15,8 @@ How to Use
 5. Try out the commands listed below!  
 
 
-Method Supported  
-================
+Methods Supported  
+=================
 get key  
 put key value  
 delete key  
