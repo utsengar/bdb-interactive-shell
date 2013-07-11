@@ -22,9 +22,10 @@ public class DatabaseMethods {
 		
 		try {
 			Environment myEnv = new Environment(envHome, myEnvConfig);
-			vendorDb = myEnv.openDatabase(null, "VendorDB", myDbConfig);
+			vendorDb = myEnv.openDatabase(null, "randomBytes", myDbConfig);
 			return true;
 		} catch (Exception ex) {
+            ex.printStackTrace();
 			return false;
 		}
 	}
